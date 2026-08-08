@@ -1,0 +1,39 @@
+name: Chartink Telegram Alert
+
+on:
+  schedule:
+    # Dar 10 minitanni, 3:30 UTC te 10:00 UTC (~9:00 AM - 3:30 PM IST), Mon-Fri
+    - cron: '*/10 3-10 * * 1-5'
+  workflow_dispatch: {}   # manual "Run workflow" button sathi
+
+permissions:
+  contents: write
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Chartink alert script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python chartink_alert.py
+
+      - name: Commit updated state
+        run: |
+          git config --global user.name "chartink-bot"
+          git config --global user.email "chartink-bot@users.noreply.github.com"
+          git add state.json
+          git diff --quiet --cached || git commit -m "Update state [skip ci]"
+          git push
