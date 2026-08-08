@@ -1,325 +1,167 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "metadata": {},
-   "source": [
-    "!pip install --upgrade gspread pytz -q"
-   ],
-   "execution_count": null,
-   "outputs": []
-  },
-  {
-   "cell_type": "code",
-   "metadata": {},
-   "source": [
-    "# ============================================================\n",
-    "# Chartink 6-Scanner Cross-Match Backtest -> Google Sheet\n",
-    "# ============================================================\n",
-    "# 6 mahinyanchya (~135 trading days) backtest madhe, prत्येक\n",
-    "# trading dinala 6hi scanners run hotात, ani jo stock ekaच\n",
-    "# dinala (D) kiva D-1/D+1 madhe 2+ scanners madhe dिसला, tो\n",
-    "# \"match\" mhanun nondला jaतो — kiती scanners madhe match zaला\n",
-    "# tyachi count sahit.\n",
-    "#\n",
-    "# LAKSHAT THEVA:\n",
-    "# - Weekly/Monthly conditions asलेल्या scanners (Varad Bullish)\n",
-    "#   madhe te conditions tashaच rahatात — फक्त daily conditions\n",
-    "#   ekdum barobar backtest hotात (Chartink chi स्वतःची mर्यादा).\n",
-    "# - Date approximate aahe (Sat/Sun sकिप, NSE holidays nahi).\n",
-    "# - Ha script chalayla 10-20 minitं lagू शकतात (600+ requests).\n",
-    "\n",
-    "import requests\n",
-    "import pandas as pd\n",
-    "import re\n",
-    "import time\n",
-    "from datetime import datetime\n",
-    "from collections import defaultdict, Counter\n",
-    "import pytz\n",
-    "\n",
-    "from google.colab import auth\n",
-    "auth.authenticate_user()\n",
-    "import gspread\n",
-    "from google.auth import default\n",
-    "\n",
-    "creds, _ = default()\n",
-    "gc = gspread.authorize(creds)\n",
-    "\n",
-    "# -----------------------------\n",
-    "# 0. Google Sheet setup (backtest sathi स्वतंत्र sheet)\n",
-    "# -----------------------------\n",
-    "SHEET_NAME = \"Chartink 6 Scanner Backtest\"\n",
-    "\n",
-    "try:\n",
-    "    sh = gc.open(SHEET_NAME)\n",
-    "    print(f\"Existing sheet सापडला: {sh.url}\")\n",
-    "except gspread.SpreadsheetNotFound:\n",
-    "    sh = gc.create(SHEET_NAME)\n",
-    "    print(f\"नवीन Google Sheet तयार झाला: {sh.url}\")\n",
-    "\n",
-    "# -----------------------------\n",
-    "# 1. 6 Scanners\n",
-    "# -----------------------------\n",
-    "SCANNERS = {\n",
-    "    \"No Loss Only Profit Swing Trading (Fut)\": {\n",
-    "        \"url\": \"https://chartink.com/screener/no-loss-only-profit-swing-trading-no-1-screenar-for-big-profit-fut\",\n",
-    "        \"scan_clause\": \"( {33489} (  weekly min ( 52 ,  weekly low ) =  daily low and  daily low <  1 day ago open and  daily low <  30 days ago open and  daily volume >  45000 and  daily open <  45 days ago close and  daily close <  90 days ago close and  daily close >=  45 ) ) \"\n",
-    "    },\n",
-    "    \"Bearish Super New Futures\": {\n",
-    "        \"url\": \"https://chartink.com/screener/bearish-super-new-futures\",\n",
-    "        \"scan_clause\": \"( {cash} (  daily close >  15 and  daily volume >  500000 and  daily rsi ( 14 ) <=  35 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) \"\n",
-    "    },\n",
-    "    \"Varad Bullish\": {\n",
-    "        \"url\": \"https://chartink.com/screener/varad-bullish\",\n",
-    "        \"scan_clause\": \"( {cash} ( ( {cash} ( ( {cash} ( ( {cash} (  daily close >  1 day ago close *  1.04 and  daily volume >  daily sma ( volume,10 ) *  0 ) ) or ( {cash} (  weekly close >  1 week ago close *  1.04 and  weekly volume >  weekly sma ( volume,10 ) *  0 ) ) ) ) and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) ) ) \"\n",
-    "    },\n",
-    "    \"Stocks in Downtrend 237\": {\n",
-    "        \"url\": \"https://chartink.com/screener/stocks-in-downtrend-237\",\n",
-    "        \"scan_clause\": \"( {57960} (  daily adx di negative ( 14 ) >  daily adx di positive ( 14 ) *  1.5 and  daily adx ( 14 ) >  25 and  daily close >  20 and  daily volume >  500000 and  1 day ago macd histogram ( 26,12,9 ) >  2 days ago macd histogram ( 26,12,9 ) and  daily macd histogram ( 26,12,9 ) >  1 day ago macd histogram ( 26,12,9 ) and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) \"\n",
-    "    },\n",
-    "    \"Downtrend with Good Volume Futures\": {\n",
-    "        \"url\": \"https://chartink.com/screener/downtrend-with-good-volume-futures\",\n",
-    "        \"scan_clause\": \"( {cash} (  3 days ago close <  3 days ago open *  0.99 and  2 days ago close <  2 days ago open *  0.99 and  1 day ago close <  1 day ago open *  0.99 and  daily volume >  daily sma ( volume,10 ) *  1.3 and  daily open >  10 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) \"\n",
-    "    },\n",
-    "    \"Perfect Bearish Varad 2\": {\n",
-    "        \"url\": \"https://chartink.com/screener/perfect-bearish-varad-2\",\n",
-    "        \"scan_clause\": \"( {cash} (  daily high >  2 days ago high and  1 day ago high >  2 days ago high and  daily high <  1 day ago high and  daily close >  50 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) \"\n",
-    "    },\n",
-    "}\n",
-    "\n",
-    "IST = pytz.timezone(\"Asia/Kolkata\")\n",
-    "\n",
-    "COLOR_2 = {\"red\": 1.0, \"green\": 0.90, \"blue\": 0.60}   # halка orange (2 scanners)\n",
-    "COLOR_3PLUS = {\"red\": 0.96, \"green\": 0.60, \"blue\": 0.38}  # gadद orange-red (3+ scanners)\n",
-    "\n",
-    "\n",
-    "def get_csrf_token(session, screener_url):\n",
-    "    resp = session.get(screener_url, headers={\"User-Agent\": \"Mozilla/5.0\"})\n",
-    "    resp.raise_for_status()\n",
-    "    start = resp.text.find('name=\"csrf-token\" content=\"')\n",
-    "    if start == -1:\n",
-    "        raise ValueError(f\"CSRF token सापडला नाही: {screener_url}\")\n",
-    "    start += len('name=\"csrf-token\" content=\"')\n",
-    "    end = resp.text.find('\"', start)\n",
-    "    return resp.text[start:end]\n",
-    "\n",
-    "\n",
-    "def run_scanner(name, url, scan_clause):\n",
-    "    if not scan_clause.strip():\n",
-    "        return pd.DataFrame()\n",
-    "    session = requests.Session()\n",
-    "    csrf_token = get_csrf_token(session, url)\n",
-    "    headers = {\n",
-    "        \"x-csrf-token\": csrf_token,\n",
-    "        \"User-Agent\": \"Mozilla/5.0\",\n",
-    "        \"Referer\": url,\n",
-    "    }\n",
-    "    resp = session.post(\n",
-    "        \"https://chartink.com/screener/process\",\n",
-    "        headers=headers,\n",
-    "        data={\"scan_clause\": scan_clause},\n",
-    "    )\n",
-    "    resp.raise_for_status()\n",
-    "    data = resp.json()\n",
-    "    return pd.DataFrame(data.get(\"data\", []))\n",
-    "\n",
-    "\n",
-    "def symbol_col(df):\n",
-    "    for c in [\"nsecode\", \"symbol\", \"name\"]:\n",
-    "        if c in df.columns:\n",
-    "            return c\n",
-    "    return df.columns[0]\n",
-    "\n",
-    "\n",
-    "def shift_clause_days(clause, n):\n",
-    "    \"\"\"scan_clause madhले 'daily'/'latest'/'K days ago' N dinानी mage shift karto.\"\"\"\n",
-    "    if n <= 0:\n",
-    "        return clause\n",
-    "    word = \"day\" if n == 1 else \"days\"\n",
-    "\n",
-    "    def repl_existing_ago(m):\n",
-    "        k = int(m.group(1))\n",
-    "        new_k = k + n\n",
-    "        w2 = \"day\" if new_k == 1 else \"days\"\n",
-    "        return f\"{new_k} {w2} ago\"\n",
-    "\n",
-    "    shifted = re.sub(r'(\\d+)\\s+days?\\s+ago', repl_existing_ago, clause)\n",
-    "    shifted = re.sub(r'\\bdaily\\b', f'{n} {word} ago', shifted)\n",
-    "    shifted = re.sub(r'\\blatest\\b', f'{n} {word} ago', shifted)\n",
-    "    return shifted\n",
-    "\n",
-    "\n",
-    "def approx_trading_date(n):\n",
-    "    if n == 0:\n",
-    "        return datetime.now(IST).strftime(\"%Y-%m-%d\")\n",
-    "    d = datetime.now(IST) - pd.tseries.offsets.BDay(n)\n",
-    "    return d.strftime(\"%Y-%m-%d\")\n",
-    "\n",
-    "\n",
-    "# -----------------------------\n",
-    "# 2. Backtest: prत्येक offset sathi prत्येक scanner cha result cache kara\n",
-    "# -----------------------------\n",
-    "def fetch_all_scanner_days(backtest_days):\n",
-    "    \"\"\"\n",
-    "    backtest_days = kiती trading din mage jayche (उदा. 135 ~ 6 mahine).\n",
-    "    Return: daily_symbols[scanner_name][offset] = set(symbols)\n",
-    "    \"\"\"\n",
-    "    daily_symbols = defaultdict(dict)\n",
-    "    total = backtest_days * len(SCANNERS)\n",
-    "    done = 0\n",
-    "\n",
-    "    for offset in range(0, backtest_days + 1):\n",
-    "        for name, info in SCANNERS.items():\n",
-    "            shifted_clause = shift_clause_days(info[\"scan_clause\"], offset)\n",
-    "            try:\n",
-    "                df = run_scanner(name, info[\"url\"], shifted_clause)\n",
-    "            except Exception as e:\n",
-    "                print(f\"  ⚠️ Error ({name}, offset {offset}): {e}\")\n",
-    "                df = pd.DataFrame()\n",
-    "            if df.empty:\n",
-    "                daily_symbols[name][offset] = set()\n",
-    "            else:\n",
-    "                sc = symbol_col(df)\n",
-    "                daily_symbols[name][offset] = set(df[sc].astype(str))\n",
-    "            done += 1\n",
-    "            time.sleep(0.25)  # Chartink server var jasti load टाळण्यासाठी\n",
-    "\n",
-    "        if offset % 10 == 0:\n",
-    "            print(f\"  Progress: {done}/{total} requests done (offset {offset}/{backtest_days})\")\n",
-    "\n",
-    "    print(f\"✅ सर्व {total} requests पूर्ण झाले.\\n\")\n",
-    "    return daily_symbols\n",
-    "\n",
-    "\n",
-    "# -----------------------------\n",
-    "# 3. ±1 day window madhe cross-scanner matches shodha\n",
-    "# -----------------------------\n",
-    "def compute_matches(daily_symbols, backtest_days):\n",
-    "    \"\"\"\n",
-    "    Prत्येक offset D sathi: anchor_set(D) = tya dinala konत्याही scanner\n",
-    "    madhe dिसलेले sagle stocks. Prत्येक stock sathi, D-1/D/D+1 window\n",
-    "    madhe kiती scanners madhe to dिsला, te mojून 2+ asेल tar match.\n",
-    "    \"\"\"\n",
-    "    scanner_names = list(SCANNERS.keys())\n",
-    "    rows = []\n",
-    "    stock_summary = defaultdict(lambda: {\"days\": 0, \"max_scanners\": 0, \"scanners_seen\": set()})\n",
-    "\n",
-    "    for D in range(0, backtest_days + 1):\n",
-    "        anchor_set = set()\n",
-    "        for name in scanner_names:\n",
-    "            anchor_set |= daily_symbols[name].get(D, set())\n",
-    "\n",
-    "        if not anchor_set:\n",
-    "            continue\n",
-    "\n",
-    "        date_label = approx_trading_date(D)\n",
-    "\n",
-    "        for sym in anchor_set:\n",
-    "            matched_scanners = []\n",
-    "            for name in scanner_names:\n",
-    "                window = set()\n",
-    "                for off in (D - 1, D, D + 1):\n",
-    "                    if off >= 0:\n",
-    "                        window |= daily_symbols[name].get(off, set())\n",
-    "                if sym in window:\n",
-    "                    matched_scanners.append(name)\n",
-    "\n",
-    "            if len(matched_scanners) >= 2:\n",
-    "                rows.append([date_label, D, sym, len(matched_scanners), \", \".join(matched_scanners)])\n",
-    "                stock_summary[sym][\"days\"] += 1\n",
-    "                stock_summary[sym][\"max_scanners\"] = max(stock_summary[sym][\"max_scanners\"], len(matched_scanners))\n",
-    "                stock_summary[sym][\"scanners_seen\"] |= set(matched_scanners)\n",
-    "\n",
-    "    rows.sort(key=lambda r: (r[0], -r[3]))\n",
-    "    return rows, stock_summary\n",
-    "\n",
-    "\n",
-    "# -----------------------------\n",
-    "# 4. Google Sheet madhe report likha\n",
-    "# -----------------------------\n",
-    "def write_report_to_sheet(rows, stock_summary):\n",
-    "    # --- Backtest Matches tab ---\n",
-    "    ws = sh.worksheet(\"Backtest Matches\") if \"Backtest Matches\" in [w.title for w in sh.worksheets()] else sh.add_worksheet(\"Backtest Matches\", rows=max(len(rows) + 10, 100), cols=10)\n",
-    "    ws.clear()\n",
-    "    headers = [\"Date (approx)\", \"Days Ago\", \"Symbol\", \"Matched Scanners Count\", \"Scanner Names\"]\n",
-    "    if rows:\n",
-    "        ws.update([headers] + rows)\n",
-    "        # Color-code by count\n",
-    "        batch = []\n",
-    "        for i, r in enumerate(rows):\n",
-    "            color = COLOR_3PLUS if r[3] >= 3 else COLOR_2\n",
-    "            batch.append({\"range\": f\"A{i+2}:E{i+2}\", \"format\": {\"backgroundColor\": color}})\n",
-    "        try:\n",
-    "            ws.batch_format(batch)\n",
-    "        except AttributeError:\n",
-    "            for b in batch:\n",
-    "                ws.format(b[\"range\"], b[\"format\"])\n",
-    "    else:\n",
-    "        ws.update([headers, [\"कोणताही match सापडला नाही\", \"\", \"\", \"\", \"\"]])\n",
-    "\n",
-    "    # --- Stock Summary tab ---\n",
-    "    ws2 = sh.worksheet(\"Stock Summary\") if \"Stock Summary\" in [w.title for w in sh.worksheets()] else sh.add_worksheet(\"Stock Summary\", rows=max(len(stock_summary) + 10, 100), cols=10)\n",
-    "    ws2.clear()\n",
-    "    summary_headers = [\"Symbol\", \"Total Match Days\", \"Max Scanners in a Day\", \"Scanners it Matched With\"]\n",
-    "    summary_rows = []\n",
-    "    for sym, info in sorted(stock_summary.items(), key=lambda x: (-x[1][\"days\"], -x[1][\"max_scanners\"])):\n",
-    "        summary_rows.append([sym, info[\"days\"], info[\"max_scanners\"], \", \".join(sorted(info[\"scanners_seen\"]))])\n",
-    "    if summary_rows:\n",
-    "        ws2.update([summary_headers] + summary_rows)\n",
-    "    else:\n",
-    "        ws2.update([summary_headers, [\"कोणताही stock सापडला नाही\", \"\", \"\", \"\"]])\n",
-    "\n",
-    "    print(f\"✅ Report Google Sheet madhe save झाला: {sh.url}\")\n",
-    "    print(f\"   - Backtest Matches: {len(rows)} rows\")\n",
-    "    print(f\"   - Stock Summary: {len(summary_rows)} unique stocks\")\n",
-    "\n",
-    "\n",
-    "# -----------------------------\n",
-    "# 5. Sagla backtest run karणारं ek function\n",
-    "# -----------------------------\n",
-    "\n",
-    "\n",
-    "def run_full_backtest(months=6):\n",
-    "    backtest_days = int(months * 21.5)  # ~21.5 trading din/mahina\n",
-    "    print(f\"Backtest सुरू: {months} mahine (~{backtest_days} trading din), 6 scanners.\")\n",
-    "    print(f\"Google Sheet: {sh.url}\\n\")\n",
-    "\n",
-    "    daily_symbols = fetch_all_scanner_days(backtest_days)\n",
-    "    rows, stock_summary = compute_matches(daily_symbols, backtest_days)\n",
-    "    write_report_to_sheet(rows, stock_summary)\n",
-    "    return rows, stock_summary\n"
-   ],
-   "execution_count": null,
-   "outputs": []
-  },
-  {
-   "cell_type": "code",
-   "metadata": {},
-   "source": [
-    "# Backtest suru kartो — DEFAULT 6 mahine (~129 trading din).\n",
-    "# Jasti mahine hवे asतील tar number badla (उदा. months=9).\n",
-    "# Ha cell chalayla 15-20 minitं lagू शकतात (600+ requests).\n",
-    "# Thambवण्यासाठी: cell cha Stop (■) button daba (ase kelyavar\n",
-    "# ata parयंतचा data sheet madhe update jhalela nasel).\n",
-    "\n",
-    "matches, summary = run_full_backtest(months=6)\n"
-   ],
-   "execution_count": null,
-   "outputs": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "name": "python3"
-  },
-  "language_info": {
-   "name": "python"
-  },
-  "colab": {
-   "provenance": []
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 0
+# ============================================================
+# Chartink 6-Scanner -> Telegram Real-time Alert (GitHub Actions)
+# ============================================================
+# Hे script GitHub Actions var schedule nusar (cron) chalte.
+# Prत्येक run madhe: 6hi scanners live run hotात, aadhichya
+# run peksha NAVEEN aslेले stocks Telegram var pathавले jaतात,
+# ani jar to stock ekaच vेळी 2+ scanners madhe dिsला tar tyachi
+# note pan message madhe yeते.
+#
+# State (magच्या run madhे koनते stocks dिसले hote) state.json
+# file madhe save hote, ani workflow prत्येक run nंतर te file
+# git commit karto — tyamuळे pudhchya run la "previous" mahit
+# rahте (GitHub Actions runner statelesss aslyaमुळे हे गरजेचे).
+
+import requests
+import json
+import os
+import sys
+from datetime import datetime
+from pathlib import Path
+import pytz
+
+STATE_FILE = Path(__file__).parent / "state.json"
+IST = pytz.timezone("Asia/Kolkata")
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
+
+SCANNERS = {
+    "No Loss Only Profit Swing Trading (Fut)": {
+        "url": "https://chartink.com/screener/no-loss-only-profit-swing-trading-no-1-screenar-for-big-profit-fut",
+        "scan_clause": "( {33489} (  weekly min ( 52 ,  weekly low ) =  daily low and  daily low <  1 day ago open and  daily low <  30 days ago open and  daily volume >  45000 and  daily open <  45 days ago close and  daily close <  90 days ago close and  daily close >=  45 ) ) "
+    },
+    "Bearish Super New Futures": {
+        "url": "https://chartink.com/screener/bearish-super-new-futures",
+        "scan_clause": "( {cash} (  daily close >  15 and  daily volume >  500000 and  daily rsi ( 14 ) <=  35 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
+    "Varad Bullish": {
+        "url": "https://chartink.com/screener/varad-bullish",
+        "scan_clause": "( {cash} ( ( {cash} ( ( {cash} ( ( {cash} (  daily close >  1 day ago close *  1.04 and  daily volume >  daily sma ( volume,10 ) *  0 ) ) or ( {cash} (  weekly close >  1 week ago close *  1.04 and  weekly volume >  weekly sma ( volume,10 ) *  0 ) ) ) ) and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) ) ) "
+    },
+    "Stocks in Downtrend 237": {
+        "url": "https://chartink.com/screener/stocks-in-downtrend-237",
+        "scan_clause": "( {57960} (  daily adx di negative ( 14 ) >  daily adx di positive ( 14 ) *  1.5 and  daily adx ( 14 ) >  25 and  daily close >  20 and  daily volume >  500000 and  1 day ago macd histogram ( 26,12,9 ) >  2 days ago macd histogram ( 26,12,9 ) and  daily macd histogram ( 26,12,9 ) >  1 day ago macd histogram ( 26,12,9 ) and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
+    "Downtrend with Good Volume Futures": {
+        "url": "https://chartink.com/screener/downtrend-with-good-volume-futures",
+        "scan_clause": "( {cash} (  3 days ago close <  3 days ago open *  0.99 and  2 days ago close <  2 days ago open *  0.99 and  1 day ago close <  1 day ago open *  0.99 and  daily volume >  daily sma ( volume,10 ) *  1.3 and  daily open >  10 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
+    "Perfect Bearish Varad 2": {
+        "url": "https://chartink.com/screener/perfect-bearish-varad-2",
+        "scan_clause": "( {cash} (  daily high >  2 days ago high and  1 day ago high >  2 days ago high and  daily high <  1 day ago high and  daily close >  50 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
 }
+
+
+def is_market_hours():
+    now = datetime.now(IST)
+    if now.weekday() >= 5:
+        return False
+    open_t = now.replace(hour=9, minute=15, second=0, microsecond=0)
+    close_t = now.replace(hour=15, minute=30, second=0, microsecond=0)
+    return open_t <= now <= close_t
+
+
+def get_csrf_token(session, screener_url):
+    resp = session.get(screener_url, headers={"User-Agent": "Mozilla/5.0"})
+    resp.raise_for_status()
+    start = resp.text.find('name="csrf-token" content="')
+    if start == -1:
+        raise ValueError(f"CSRF token सापडला नाही: {screener_url}")
+    start += len('name="csrf-token" content="')
+    end = resp.text.find('"', start)
+    return resp.text[start:end]
+
+
+def run_scanner(name, url, scan_clause):
+    session = requests.Session()
+    csrf_token = get_csrf_token(session, url)
+    headers = {
+        "x-csrf-token": csrf_token,
+        "User-Agent": "Mozilla/5.0",
+        "Referer": url,
+    }
+    resp = session.post(
+        "https://chartink.com/screener/process",
+        headers=headers,
+        data={"scan_clause": scan_clause},
+    )
+    resp.raise_for_status()
+    data = resp.json()
+    rows = data.get("data", [])
+    symbols = set()
+    for r in rows:
+        sym = r.get("nsecode") or r.get("symbol") or r.get("name")
+        if sym:
+            symbols.add(str(sym))
+    return symbols
+
+
+def load_state():
+    if STATE_FILE.exists():
+        return json.loads(STATE_FILE.read_text())
+    return {name: [] for name in SCANNERS}
+
+
+def save_state(state):
+    STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False))
+
+
+def send_telegram(message):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("⚠️  TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID set नाहीत — message पाठवता आला नाही.")
+        return
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    resp = requests.post(url, data={
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "parse_mode": "HTML",
+    })
+    if not resp.ok:
+        print(f"⚠️  Telegram send failed: {resp.text}")
+
+
+def main():
+    if not is_market_hours():
+        print("Market hours नाहीत (9:15-15:30 IST, Mon-Fri) — skip करत आहे.")
+        return
+
+    old_state = load_state()
+    new_state = {}
+    current_symbols_by_scanner = {}
+
+    for name, info in SCANNERS.items():
+        try:
+            symbols = run_scanner(name, info["url"], info["scan_clause"])
+        except Exception as e:
+            print(f"⚠️ Error fetching '{name}': {e}")
+            symbols = set(old_state.get(name, []))
+        current_symbols_by_scanner[name] = symbols
+        new_state[name] = sorted(symbols)
+
+    now_str = datetime.now(IST).strftime("%H:%M:%S")
+    alerts = []
+
+    for name, symbols in current_symbols_by_scanner.items():
+        prev = set(old_state.get(name, []))
+        new_syms = symbols - prev
+        for sym in sorted(new_syms):
+            other_scanners = [n for n, s in current_symbols_by_scanner.items() if n != name and sym in s]
+            line = f"🔔 <b>{sym}</b> — new in <i>{name}</i>"
+            if other_scanners:
+                line += f"\n   ↳ आधीच यात पण आहे: {', '.join(other_scanners)}"
+            alerts.append(line)
+
+    if alerts:
+        message = f"<b>Chartink Alert ({now_str} IST)</b>\n\n" + "\n\n".join(alerts)
+        send_telegram(message)
+        print(f"✅ {len(alerts)} नवीन स्टॉक्ससाठी alert पाठवला.")
+    else:
+        print("नवीन स्टॉक नाही या cycle मध्ये.")
+
+    save_state(new_state)
+
+
+if __name__ == "__main__":
+    main()
