@@ -1,152 +1,166 @@
-"""
-Chartink Screener -> Telegram Alert Bot
-----------------------------------------
-Multiple Chartink screeners check karto, results Telegram var pathvto.
-Ekach stock ekach divsat FAKT EKDA alert hoto (daily reset cache) —
-kal ala asel to stock aaj parat aala tar aajparynt navin mhanunach alert jail.
+# ============================================================
+# Chartink 6-Scanner -> Telegram Real-time Alert (GitHub Actions)
+# ============================================================
+# Hе script GitHub Actions var schedule nusar (cron) chalte.
+# Prत्येक run madhe: 6hi scanners live run hotात, aadhichya
+# run peksha NAVEEN aslेले stocks Telegram var pathавले jaतात,
+# ani jar to stock ekaच vेळी 2+ scanners madhe dिsला tar tyachi
+# note pan message madhe yeते.
+#
+# State (magच्या run madhе koनते stocks dिसले hote) state.json
+# file madhe save hote, ani workflow prत्येक run nंतर te file
+# git commit karto — tyamuळे pudhchya run la "previous" mahit
+# rahте (GitHub Actions runner statelesss aslyaमुळे हे गरजेचे).
 
-Env variables lagतात (GitHub Secrets madhun yetat):
-    TELEGRAM_TOKEN
-    TELEGRAM_CHAT_ID
-"""
-
-import os
-import re
-import json
 import requests
-from datetime import datetime, timedelta, timezone
+import json
+import os
+import sys
+from datetime import datetime
+from pathlib import Path
+import pytz
 
-IST = timezone(timedelta(hours=5, minutes=30))
+STATE_FILE = Path(__file__).parent / "state.json"
+IST = pytz.timezone("Asia/Kolkata")
 
-# ---- Config: tumche 6 screeners (URL madhla shevatcha slug) ----
-SCREENERS = [
-    "break-down-swing-trading-screener-backtest-4-6",
-    "copy-btst-1-day-ago-high-breakout-screener-201",
-    "downtrend-with-good-volume-futures",
-    "perfect-bearish-varad-2",
-    "varad-bullish",
-    "bearish-super-new",
-]
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
-
-CACHE_FILE = "seen_stocks.json"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+SCANNERS = {
+    "No Loss Only Profit Swing Trading (Fut)": {
+        "url": "https://chartink.com/screener/no-loss-only-profit-swing-trading-no-1-screenar-for-big-profit-fut",
+        "scan_clause": "( {33489} (  weekly min ( 52 ,  weekly low ) =  daily low and  daily low <  1 day ago open and  daily low <  30 days ago open and  daily volume >  45000 and  daily open <  45 days ago close and  daily close <  90 days ago close and  daily close >=  45 ) ) "
+    },
+    "Bearish Super New Futures": {
+        "url": "https://chartink.com/screener/bearish-super-new-futures",
+        "scan_clause": "( {cash} (  daily close >  15 and  daily volume >  500000 and  daily rsi ( 14 ) <=  35 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
+    "Varad Bullish": {
+        "url": "https://chartink.com/screener/varad-bullish",
+        "scan_clause": "( {cash} ( ( {cash} ( ( {cash} ( ( {cash} (  daily close >  1 day ago close *  1.04 and  daily volume >  daily sma ( volume,10 ) *  0 ) ) or ( {cash} (  weekly close >  1 week ago close *  1.04 and  weekly volume >  weekly sma ( volume,10 ) *  0 ) ) ) ) and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) ) ) "
+    },
+    "Stocks in Downtrend 237": {
+        "url": "https://chartink.com/screener/stocks-in-downtrend-237",
+        "scan_clause": "( {57960} (  daily adx di negative ( 14 ) >  daily adx di positive ( 14 ) *  1.5 and  daily adx ( 14 ) >  25 and  daily close >  20 and  daily volume >  500000 and  1 day ago macd histogram ( 26,12,9 ) >  2 days ago macd histogram ( 26,12,9 ) and  daily macd histogram ( 26,12,9 ) >  1 day ago macd histogram ( 26,12,9 ) and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
+    "Downtrend with Good Volume Futures": {
+        "url": "https://chartink.com/screener/downtrend-with-good-volume-futures",
+        "scan_clause": "( {cash} (  3 days ago close <  3 days ago open *  0.99 and  2 days ago close <  2 days ago open *  0.99 and  1 day ago close <  1 day ago open *  0.99 and  daily volume >  daily sma ( volume,10 ) *  1.3 and  daily open >  10 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
+    "Perfect Bearish Varad 2": {
+        "url": "https://chartink.com/screener/perfect-bearish-varad-2",
+        "scan_clause": "( {cash} (  daily high >  2 days ago high and  1 day ago high >  2 days ago high and  daily high <  1 day ago high and  daily close >  50 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
+    },
 }
 
 
-def send_telegram(text: str):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    resp = requests.post(
-        url,
-        data={
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": text,
-            "parse_mode": "HTML",
-            "disable_web_page_preview": True,
-        },
-        timeout=20,
-    )
-    if not resp.ok:
-        print("Telegram send failed:", resp.text)
+def is_market_hours():
+    now = datetime.now(IST)
+    if now.weekday() >= 5:
+        return False
+    open_t = now.replace(hour=9, minute=15, second=0, microsecond=0)
+    close_t = now.replace(hour=15, minute=30, second=0, microsecond=0)
+    return open_t <= now <= close_t
 
 
-def today_str():
-    return datetime.now(IST).strftime("%Y-%m-%d")
+def get_csrf_token(session, screener_url):
+    resp = session.get(screener_url, headers={"User-Agent": "Mozilla/5.0"})
+    resp.raise_for_status()
+    start = resp.text.find('name="csrf-token" content="')
+    if start == -1:
+        raise ValueError(f"CSRF token सापडला नाही: {screener_url}")
+    start += len('name="csrf-token" content="')
+    end = resp.text.find('"', start)
+    return resp.text[start:end]
 
 
-def load_cache():
-    """Cache asa asto: {"date": "YYYY-MM-DD", "screeners": {slug: [symbols...]}}
-    Jar cache madhla date aajcha nasel, tar to purna reset hoto (navin divas = navin start)."""
-    if os.path.exists(CACHE_FILE):
-        with open(CACHE_FILE, "r") as f:
-            cache = json.load(f)
-        if cache.get("date") != today_str():
-            return {"date": today_str(), "screeners": {}}
-        return cache
-    return {"date": today_str(), "screeners": {}}
-
-
-def save_cache(cache):
-    with open(CACHE_FILE, "w") as f:
-        json.dump(cache, f)
-
-
-def fetch_screener(slug: str):
-    """Ek screener che live results ghete (list of dict: symbol, name, close, per_chg)."""
+def run_scanner(name, url, scan_clause):
     session = requests.Session()
-    page = session.get(f"https://chartink.com/screener/{slug}", headers=HEADERS, timeout=20)
-    page.raise_for_status()
-    html = page.text
-
-    csrf_match = re.search(r'name="csrf-token" content="([^"]+)"', html)
-    scan_match = re.search(r'"scan_clause":"(.*?)"\}', html)
-
-    if not csrf_match or not scan_match:
-        print(f"[{slug}] scan_clause / csrf-token sapadla nahi, screener page format badalla asel.")
-        return []
-
-    csrf_token = csrf_match.group(1)
-    scan_clause = scan_match.group(1).encode().decode("unicode_escape")
-
-    post_headers = dict(HEADERS)
-    post_headers["x-csrf-token"] = csrf_token
-
-    result = session.post(
+    csrf_token = get_csrf_token(session, url)
+    headers = {
+        "x-csrf-token": csrf_token,
+        "User-Agent": "Mozilla/5.0",
+        "Referer": url,
+    }
+    resp = session.post(
         "https://chartink.com/screener/process",
-        headers=post_headers,
+        headers=headers,
         data={"scan_clause": scan_clause},
-        timeout=20,
     )
-    result.raise_for_status()
-    data = result.json().get("data", [])
+    resp.raise_for_status()
+    data = resp.json()
+    rows = data.get("data", [])
+    symbols = set()
+    for r in rows:
+        sym = r.get("nsecode") or r.get("symbol") or r.get("name")
+        if sym:
+            symbols.add(str(sym))
+    return symbols
 
-    return [
-        {
-            "symbol": row.get("nsecode", row.get("bsecode", "")),
-            "name": row.get("name", ""),
-            "close": row.get("close", ""),
-            "chg": row.get("per_chg", ""),
-        }
-        for row in data
-    ]
+
+def load_state():
+    if STATE_FILE.exists():
+        return json.loads(STATE_FILE.read_text())
+    return {name: [] for name in SCANNERS}
+
+
+def save_state(state):
+    STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False))
+
+
+def send_telegram(message):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("⚠️  TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID set नाहीत — message पाठवता आला नाही.")
+        return
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    resp = requests.post(url, data={
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "parse_mode": "HTML",
+    })
+    if not resp.ok:
+        print(f"⚠️  Telegram send failed: {resp.text}")
 
 
 def main():
-    cache = load_cache()
-    any_alert = False
+    if not is_market_hours():
+        print("Market hours नाहीत (9:15-15:30 IST, Mon-Fri) — skip करत आहे.")
+        return
 
-    for slug in SCREENERS:
+    old_state = load_state()
+    new_state = {}
+    current_symbols_by_scanner = {}
+
+    for name, info in SCANNERS.items():
         try:
-            stocks = fetch_screener(slug)
+            symbols = run_scanner(name, info["url"], info["scan_clause"])
         except Exception as e:
-            print(f"[{slug}] error: {e}")
-            continue
+            print(f"⚠️ Error fetching '{name}': {e}")
+            symbols = set(old_state.get(name, []))
+        current_symbols_by_scanner[name] = symbols
+        new_state[name] = sorted(symbols)
 
-        seen_today = set(cache["screeners"].get(slug, []))
-        new_stocks = [s for s in stocks if s["symbol"] not in seen_today]
+    now_str = datetime.now(IST).strftime("%H:%M:%S")
+    alerts = []
 
-        if new_stocks:
-            any_alert = True
-            lines = [f"<b>📢 {slug}</b>", ""]
-            for s in new_stocks:
-                lines.append(f"• <b>{s['symbol']}</b> — {s['name']} | ₹{s['close']} ({s['chg']}%)")
-            send_telegram("\n".join(lines))
-            print(f"[{slug}] {len(new_stocks)} navin stock(s) pathavle.")
-        else:
-            print(f"[{slug}] navin stock nahi (aajparynt alert zalele).")
+    for name, symbols in current_symbols_by_scanner.items():
+        prev = set(old_state.get(name, []))
+        new_syms = symbols - prev
+        for sym in sorted(new_syms):
+            other_scanners = [n for n, s in current_symbols_by_scanner.items() if n != name and sym in s]
+            line = f"🔔 <b>{sym}</b> — new in <i>{name}</i>"
+            if other_scanners:
+                line += f"\n   ↳ आधीच यात पण आहे: {', '.join(other_scanners)}"
+            alerts.append(line)
 
-        # aaj alert zalele sagle symbols cache madhe add karto (jene karun tyach divsat parat alert jaणar nahi)
-        seen_today.update(s["symbol"] for s in new_stocks)
-        cache["screeners"][slug] = list(seen_today)
+    if alerts:
+        message = f"<b>Chartink Alert ({now_str} IST)</b>\n\n" + "\n\n".join(alerts)
+        send_telegram(message)
+        print(f"✅ {len(alerts)} नवीन स्टॉक्ससाठी alert पाठवला.")
+    else:
+        print("नवीन स्टॉक नाही या cycle मध्ये.")
 
-    save_cache(cache)
-
-    if not any_alert:
-        print("Kontyahi screener madhe navin stock nahi ya run madhe.")
+    save_state(new_state)
 
 
 if __name__ == "__main__":
