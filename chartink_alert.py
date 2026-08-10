@@ -1,13 +1,13 @@
 # ============================================================
 # Chartink 6-Scanner -> Telegram Real-time Alert (GitHub Actions)
 # ============================================================
-# Hе script GitHub Actions var schedule nusar (cron) chalte.
+# Hे script GitHub Actions var schedule nusar (cron) chalte.
 # Prत्येक run madhe: 6hi scanners live run hotात, aadhichya
 # run peksha NAVEEN aslेले stocks Telegram var pathавले jaतात,
 # ani jar to stock ekaच vेळी 2+ scanners madhe dिsला tar tyachi
 # note pan message madhe yeते.
 #
-# State (magच्या run madhе koनते stocks dिसले hote) state.json
+# State (magच्या run madhे koनते stocks dिसले hote) state.json
 # file madhe save hote, ani workflow prत्येक run nंतर te file
 # git commit karto — tyamuळे pudhchya run la "previous" mahit
 # rahте (GitHub Actions runner statelesss aslyaमुळे हे गरजेचे).
@@ -112,20 +112,27 @@ def send_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("⚠️  TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID set नाहीत — message पाठवता आला नाही.")
         return
+    # TELEGRAM_CHAT_ID madhe comma ne veगळे kelele multiple ids asू शकतात
+    # (उदा. "889495513,123456789") — pratyekala vेगळा message jaईल.
+    chat_ids = [c.strip() for c in TELEGRAM_CHAT_ID.split(",") if c.strip()]
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    resp = requests.post(url, data={
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "HTML",
-    })
-    if not resp.ok:
-        print(f"⚠️  Telegram send failed: {resp.text}")
+    for chat_id in chat_ids:
+        resp = requests.post(url, data={
+            "chat_id": chat_id,
+            "text": message,
+            "parse_mode": "HTML",
+        })
+        if not resp.ok:
+            print(f"⚠️  Telegram send failed (chat_id {chat_id}): {resp.text}")
 
 
 def main():
-    if not is_market_hours():
+    test_mode = os.environ.get("TEST_MODE", "false").lower() == "true"
+    if not test_mode and not is_market_hours():
         print("Market hours नाहीत (9:15-15:30 IST, Mon-Fri) — skip करत आहे.")
         return
+    if test_mode:
+        print("🧪 TEST MODE चालू आहे — market hours ची अट bypass केली आहे.")
 
     old_state = load_state()
     new_state = {}
