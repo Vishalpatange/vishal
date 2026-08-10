@@ -1,12 +1,14 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [],
   "Bearish Super New Futures": [],
-  "Varad Bullish": [],
-  "Stocks in Downtrend 237": [
-    "HDFCBANK"
+  "Varad Bullish": [
+    "GLFL"
   ],
+  "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "MUKTAARTS"
+    "BOROSCI",
+    "DELHIVERY",
+    "LICI"
   ]
 }
