@@ -1,5 +1,7 @@
 {
-  "No Loss Only Profit Swing Trading (Fut)": [],
+  "No Loss Only Profit Swing Trading (Fut)": [
+    "INOXWIND"
+  ],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "GLFL"
@@ -8,7 +10,6 @@
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
     "BOROSCI",
-    "DELHIVERY",
     "LICI"
   ]
 }
