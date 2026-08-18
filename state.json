@@ -1,35 +1,26 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
+    "DABUR",
     "ITC"
   ],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "AQYLON",
-    "BNALTD",
     "EMPOWER",
     "INSPIRISYS",
+    "IRIS",
     "KLBRENG-B",
     "KPEL",
     "MIDWESTLTD",
-    "SHYAMTEL",
-    "TERASOFT"
+    "TECHNOE"
   ],
-  "Stocks in Downtrend 237": [
-    "APTUS",
-    "GODREJCP",
-    "NLCINDIA"
-  ],
-  "Downtrend with Good Volume Futures": [
-    "RADIANTCMS"
-  ],
+  "Stocks in Downtrend 237": [],
+  "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
     "ACI",
     "AMBIKCO",
-    "ATAM",
     "BHARATWIRE",
-    "BLACKROSE",
     "BLKASHYAP",
-    "BNALTD",
     "CMRGREEN",
     "DECCANCE",
     "INOXWIND",
@@ -37,7 +28,6 @@
     "NLCINDIA",
     "PWL",
     "RAINBOW",
-    "SUNCLAY",
     "WAAREEINDO"
   ]
 }
