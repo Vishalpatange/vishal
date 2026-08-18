@@ -5,11 +5,13 @@
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "AQYLON",
+    "BNALTD",
     "EMPOWER",
     "INSPIRISYS",
     "KLBRENG-B",
+    "KPEL",
     "MIDWESTLTD",
-    "PWL",
+    "SHYAMTEL",
     "TERASOFT"
   ],
   "Stocks in Downtrend 237": [
@@ -17,7 +19,9 @@
     "GODREJCP",
     "NLCINDIA"
   ],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "RADIANTCMS"
+  ],
   "Perfect Bearish Varad 2": [
     "ACI",
     "AMBIKCO",
@@ -25,6 +29,7 @@
     "BHARATWIRE",
     "BLACKROSE",
     "BLKASHYAP",
+    "BNALTD",
     "CMRGREEN",
     "DECCANCE",
     "INOXWIND",
