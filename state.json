@@ -4,12 +4,15 @@
   ],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
+    "AQYLON",
     "EMPOWER",
     "IDEAFORGE",
     "PWL",
-    "TECILCHEM"
+    "SHYAMTEL"
   ],
-  "Stocks in Downtrend 237": [],
+  "Stocks in Downtrend 237": [
+    "RECLTD"
+  ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
     "ACI",
@@ -21,11 +24,10 @@
     "DECCANCE",
     "INOXWIND",
     "IRIS",
-    "LINDEINDIA",
     "MARALOVER",
+    "NLCINDIA",
     "PWL",
     "RAINBOW",
-    "SUNCLAY",
     "WAAREEINDO"
   ]
 }
