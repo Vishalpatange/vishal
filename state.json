@@ -1,28 +1,45 @@
 {
-  "No Loss Only Profit Swing Trading (Fut)": [],
+  "No Loss Only Profit Swing Trading (Fut)": [
+    "DABUR",
+    "HDFCBANK",
+    "IRFC",
+    "UPL"
+  ],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "BNALTD",
     "CAMLINFINE",
-    "COFFEEDAY",
     "JISLJALEQS",
-    "KPEL",
+    "MADHAVIPL",
     "PWL",
-    "TICL"
+    "SHYAMTEL"
   ],
-  "Stocks in Downtrend 237": [],
+  "Stocks in Downtrend 237": [
+    "GMRAIRPORT",
+    "PFC"
+  ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
+    "AIAENG",
     "APTUS",
-    "DECCANCE",
+    "BANCOINDIA",
+    "BIOCON",
+    "BNALTD",
+    "DCXINDIA",
+    "DREAMFOLKS",
+    "EXCELSOFT",
     "FMGOETZE",
+    "HARIOMPIPE",
     "KLBRENG-B",
-    "REDTAPE",
+    "LINDEINDIA",
+    "MODIRUBBER",
+    "REPRO",
+    "RUBFILA",
     "SOLARWORLD",
     "SUPRIYA",
+    "SURYAROSNI",
     "TECHNOE",
     "TENNIND",
-    "WONDERLA",
-    "YATHARTH"
+    "WONDERLA"
   ]
 }
