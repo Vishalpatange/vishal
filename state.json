@@ -4,11 +4,11 @@
     "HDFCBANK",
     "HINDUNILVR",
     "IRFC",
-    "ITC",
-    "UPL"
+    "ITC"
   ],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
+    "AQYLON",
     "BLACKROSE",
     "BNALTD",
     "EMPOWER",
@@ -21,7 +21,8 @@
     "PFC"
   ],
   "Downtrend with Good Volume Futures": [
-    "RELCHEMQ"
+    "RELCHEMQ",
+    "ZOTA"
   ],
   "Perfect Bearish Varad 2": [
     "AIAENG",
@@ -30,7 +31,6 @@
     "BIOCON",
     "CREST",
     "DCXINDIA",
-    "DENORA",
     "EXCELSOFT",
     "HARIOMPIPE",
     "KLBRENG-B",
@@ -39,6 +39,7 @@
     "SUPRIYA",
     "SURYAROSNI",
     "TECHNOE",
+    "TENNIND",
     "UPL",
     "WONDERLA"
   ]
