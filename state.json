@@ -10,18 +10,22 @@
     "EMPOWER",
     "INSPIRISYS",
     "IRIS",
-    "JISLJALEQS",
     "KLBRENG-B",
     "KPEL",
+    "MIDWESTLTD",
     "PWL",
     "TECHNOE"
   ],
   "Stocks in Downtrend 237": [
     "APTUS",
     "GODREJCP",
+    "JAINREC",
     "NLCINDIA"
   ],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "KPEL",
+    "RADIANTCMS"
+  ],
   "Perfect Bearish Varad 2": [
     "ACI",
     "AMBIKCO",
@@ -34,6 +38,7 @@
     "NLCINDIA",
     "PWL",
     "RAINBOW",
+    "SUNCLAY",
     "WAAREEINDO"
   ]
 }
