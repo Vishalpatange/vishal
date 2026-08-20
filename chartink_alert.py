@@ -31,6 +31,10 @@ SCANNERS = {
         "url": "https://chartink.com/screener/no-loss-only-profit-swing-trading-no-1-screenar-for-big-profit-fut",
         "scan_clause": "( {33489} (  weekly min ( 52 ,  weekly low ) =  daily low and  daily low <  1 day ago open and  daily low <  30 days ago open and  daily volume >  45000 and  daily open <  45 days ago close and  daily close <  90 days ago close and  daily close >=  45 ) ) "
     },
+        "Bull Doji Confirm": {
+        "url": "https://chartink.com/screener/bull-doji-confirm",
+        "scan_clause": "( {cash} ( ( {cash} ( ( {cash} (  weekly close >  weekly supertrend ( 7 , 3 ) and  weekly rsi ( 14 ) >  60 and  weekly close >  weekly upper bollinger band ( 20 , 2 ) and  1 day ago close <  daily sma (  daily close , 20 ) ) ) ) ) ) )  "
+    },
     "Bearish Super New Futures": {
         "url": "https://chartink.com/screener/bearish-super-new-futures",
         "scan_clause": "( {cash} (  daily close >  15 and  daily volume >  500000 and  daily rsi ( 14 ) <=  35 and  daily ^7106('source'=' daily close','max_bars'='80','min_bars'='22','pattern_json'='[29,46,77,111,145,179,201,213,179,146,119,167,245,278,286]','match_threshold'='0.15','resample_points'='15','output'='flag_match')^ =  1 ) ) "
