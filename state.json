@@ -12,34 +12,21 @@
     "AQYLON",
     "BLACKROSE",
     "BNALTD",
-    "EMPOWER",
     "JISLJALEQS",
-    "KPEL"
+    "KPEL",
+    "PWL"
   ],
-  "Stocks in Downtrend 237": [
-    "GMRAIRPORT",
-    "PFC"
-  ],
-  "Downtrend with Good Volume Futures": [
-    "RELCHEMQ",
-    "ZOTA"
-  ],
+  "Stocks in Downtrend 237": [],
+  "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "AIAENG",
-    "APTUS",
-    "BANCOINDIA",
-    "BIOCON",
-    "DCXINDIA",
     "DENORA",
-    "EXCELSOFT",
-    "HARIOMPIPE",
-    "KLBRENG-B",
-    "REPRO",
-    "SOLARWORLD",
-    "SUPRIYA",
-    "SURYAROSNI",
-    "TECHNOE",
-    "TENNIND",
-    "WONDERLA"
+    "EKC",
+    "GMRAIRPORT",
+    "GODREJCP",
+    "KPEL",
+    "ORKLAINDIA",
+    "RACE",
+    "REDTAPE",
+    "REPRO"
   ]
 }
