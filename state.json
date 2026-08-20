@@ -1,14 +1,15 @@
 {
-  "No Loss Only Profit Swing Trading (Fut)": [],
+  "No Loss Only Profit Swing Trading (Fut)": [
+    "ITC"
+  ],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "BLACKROSE",
     "CAMLINFINE",
     "DREAMFOLKS",
-    "GENUSPAPER",
     "JAINREC",
     "JISLJALEQS",
-    "KPEL"
+    "KPEL",
+    "SUPRIYA"
   ],
   "Stocks in Downtrend 237": [
     "GMRAIRPORT",
@@ -16,15 +17,18 @@
   ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
+    "BNALTD",
+    "CREST",
+    "DOLLAR",
     "FAZE3Q",
     "GMRAIRPORT",
     "HGINFRA",
     "HINDWAREAP",
     "HUDCO",
-    "IRCON",
     "JITFINFRA",
     "KPEL",
     "MUFTI",
+    "RBZJEWEL",
     "REDTAPE",
     "VIDYAWIRES",
     "WALCHANNAG"
