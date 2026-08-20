@@ -5,20 +5,26 @@
     "AQYLON",
     "BLACKROSE",
     "BNALTD",
+    "CAMLINFINE",
+    "DREAMFOLKS",
     "JISLJALEQS",
     "KPEL"
   ],
-  "Stocks in Downtrend 237": [],
+  "Stocks in Downtrend 237": [
+    "GMRAIRPORT",
+    "PFC"
+  ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "DENORA",
-    "EKC",
     "GMRAIRPORT",
-    "GODREJCP",
+    "HGINFRA",
+    "HINDWAREAP",
+    "HUDCO",
+    "IRCON",
+    "JITFINFRA",
     "KPEL",
-    "ORKLAINDIA",
-    "RACE",
+    "MUFTI",
     "REDTAPE",
-    "REPRO"
+    "VIDYAWIRES"
   ]
 }
