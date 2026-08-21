@@ -6,10 +6,8 @@
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "AQYLON",
-    "BLACKROSE",
     "CAMLINFINE",
-    "JISLJALEQS",
-    "SUPREME"
+    "JISLJALEQS"
   ],
   "Stocks in Downtrend 237": [
     "ITC",
@@ -17,19 +15,21 @@
     "NBCC",
     "NLCINDIA"
   ],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "CAMS"
+  ],
   "Perfect Bearish Varad 2": [
     "BLACKROSE",
     "CHAMBLFERT",
     "DELHIVERY",
     "FAZE3Q",
     "HPL",
+    "IRCON",
     "ITC",
     "OMAXAUTO",
     "REPCOHOME",
     "SINCLAIR",
     "SJVN",
-    "UPL",
     "VIKRAN"
   ]
 }
