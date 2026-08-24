@@ -2,23 +2,28 @@
   "No Loss Only Profit Swing Trading (Fut)": [],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
-  "Varad Bullish": [],
-  "Stocks in Downtrend 237": [],
+  "Varad Bullish": [
+    "MODINATUR"
+  ],
+  "Stocks in Downtrend 237": [
+    "ITC",
+    "NBCC",
+    "PFC"
+  ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
     "ALPA",
     "BAJAJINDEF",
-    "CAMLINFINE",
     "CMRGREEN",
     "CPPLUS",
-    "DOLLAR",
     "GICHSGFIN",
     "GMDCLTD",
     "KIRLPNU",
+    "MAANALU",
     "OLECTRA",
-    "PLASTIBLEN",
     "POWERMECH",
     "PROSTARM",
+    "PYRAMID",
     "RMC"
   ]
 }
