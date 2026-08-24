@@ -1,10 +1,13 @@
 {
-  "No Loss Only Profit Swing Trading (Fut)": [],
+  "No Loss Only Profit Swing Trading (Fut)": [
+    "DABUR"
+  ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "MODINATUR",
-    "RNBDENIMS"
+    "RNBDENIMS",
+    "SOLEX"
   ],
   "Stocks in Downtrend 237": [
     "ITC",
@@ -14,6 +17,7 @@
   ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
+    "ALPA",
     "BAJAJINDEF",
     "CPPLUS",
     "GICHSGFIN",
@@ -21,6 +25,7 @@
     "KIRLPNU",
     "MAANALU",
     "OLECTRA",
+    "PILANIINVS",
     "POWERMECH",
     "PROSTARM",
     "PYRAMID",
