@@ -1,13 +1,13 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "DABUR"
+    "DABUR",
+    "HINDUNILVR"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "MODINATUR",
-    "RNBDENIMS",
-    "SOLEX"
+    "RNBDENIMS"
   ],
   "Stocks in Downtrend 237": [
     "ITC",
@@ -15,8 +15,11 @@
     "NLCINDIA",
     "PFC"
   ],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "DRCSYSTEMS"
+  ],
   "Perfect Bearish Varad 2": [
+    "ALPA",
     "BAJAJINDEF",
     "CPPLUS",
     "GICHSGFIN",
@@ -27,6 +30,7 @@
     "POWERMECH",
     "PROSTARM",
     "PYRAMID",
-    "RMC"
+    "RMC",
+    "WEALTH"
   ]
 }
