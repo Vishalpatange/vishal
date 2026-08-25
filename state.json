@@ -1,12 +1,28 @@
 {
-  "No Loss Only Profit Swing Trading (Fut)": [],
+  "No Loss Only Profit Swing Trading (Fut)": [
+    "DABUR"
+  ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
-  "Varad Bullish": [],
-  "Stocks in Downtrend 237": [],
+  "Varad Bullish": [
+    "MONEYBOXX",
+    "RADIANTCMS"
+  ],
+  "Stocks in Downtrend 237": [
+    "IRFC",
+    "NBCC",
+    "PFC"
+  ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
+    "BELLACASA",
+    "FINPIPE",
+    "GRMOVER",
     "NAVA",
-    "SOLEX"
+    "NDLVENTURE",
+    "NLCINDIA",
+    "SOLARWORLD",
+    "SOLEX",
+    "ZOTA"
   ]
 }
