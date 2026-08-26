@@ -3,7 +3,6 @@
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "CIFL",
     "UEL"
   ],
   "Stocks in Downtrend 237": [
@@ -12,9 +11,12 @@
     "PFC",
     "TMPV"
   ],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "NIBL"
+  ],
   "Perfect Bearish Varad 2": [
     "GOCLCORP",
+    "KILITCH",
     "TATACOMM"
   ]
 }
