@@ -2,12 +2,22 @@
   "No Loss Only Profit Swing Trading (Fut)": [],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
-  "Varad Bullish": [],
+  "Varad Bullish": [
+    "HDIL",
+    "KILITCH",
+    "NIBL",
+    "UEL"
+  ],
   "Stocks in Downtrend 237": [
-    "NBCC"
+    "NBCC",
+    "PFC",
+    "TMPV"
   ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "BAYERCROP"
+    "GOCLCORP",
+    "KILITCH",
+    "PML",
+    "TATACOMM"
   ]
 }
