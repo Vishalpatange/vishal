@@ -1,22 +1,35 @@
 {
-  "No Loss Only Profit Swing Trading (Fut)": [],
+  "No Loss Only Profit Swing Trading (Fut)": [
+    "DABUR",
+    "GODREJCP",
+    "HDFCBANK",
+    "HINDUNILVR",
+    "ICICIGI",
+    "INOXWIND",
+    "IRFC",
+    "ITC",
+    "PIIND",
+    "RVNL",
+    "VOLTAS"
+  ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "UEL"
+    "ASIANTILES",
+    "GANGAFORGE"
   ],
   "Stocks in Downtrend 237": [
-    "ITC",
-    "NBCC",
-    "PFC",
     "TMPV"
   ],
-  "Downtrend with Good Volume Futures": [
-    "NIBL"
-  ],
+  "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "GOCLCORP",
-    "KILITCH",
-    "TATACOMM"
+    "AAVAS",
+    "BSE",
+    "KUANTUM",
+    "MONEYBOXX",
+    "PRIMESECU",
+    "SURAJEST",
+    "TATAELXSI",
+    "WIPRO"
   ]
 }
