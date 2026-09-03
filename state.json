@@ -1,32 +1,27 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "BLUESTARCO",
     "DABUR",
+    "GODREJCP",
     "HINDUNILVR",
-    "ICICIGI",
-    "INOXWIND",
-    "IRFC",
-    "PIIND",
-    "RVNL",
-    "VOLTAS"
+    "ICICIGI"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "ASIANTILES",
+    "FIRSTCRY",
     "GANGAFORGE",
-    "RHETAN",
-    "VALIANTORG"
+    "GVPIL"
   ],
   "Stocks in Downtrend 237": [
+    "BLS",
     "TMPV"
   ],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "FIRSTCRY",
+    "NEUEON"
+  ],
   "Perfect Bearish Varad 2": [
-    "GREENPANEL",
-    "MONEYBOXX",
-    "SAMMAANCAP",
-    "SHREYANIND",
-    "TARC"
+    "COMMOIETF"
   ]
 }
