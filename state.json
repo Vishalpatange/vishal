@@ -1,54 +1,35 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
+    "BANKBARODA",
+    "BRITANNIA",
     "DABUR",
-    "HINDUNILVR",
-    "ICICIGI"
+    "GODREJCP",
+    "ICICIGI",
+    "TATACONSUM"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "ALOKINDS",
-    "ASIANTILES",
-    "GANGAFORGE",
-    "SPMLINFRA",
+    "ESSENTIA",
     "TAKE"
   ],
   "Stocks in Downtrend 237": [
-    "FIRSTCRY",
-    "NBCC",
+    "ADANIENSOL",
     "TMPV"
   ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "ADANIENSOL",
-    "BERGEPAINT",
-    "BIOCON",
-    "BLS",
-    "CNXNIFTYJUNIOR",
-    "DAMCAPITAL",
-    "EUROBOND",
-    "GODREJPROP",
-    "HUDCO",
-    "JBMA",
-    "KPIGREEN",
-    "LOTUSEYE",
-    "MOIL",
-    "MUFTI",
-    "MUTHOOTFIN",
-    "NIFTY100EQLWGT",
-    "NIFTY100ESG",
-    "NIFTY100ESGSECLDR",
-    "OLECTRA",
-    "ORISSAMINE",
-    "PACEDIGITK",
-    "PARKHOSPS",
-    "RAMKY",
-    "RCF",
-    "ROUTE",
-    "SANDUMA",
-    "SENSEXADD",
-    "TPLPLASTEH",
-    "TVSSCS",
-    "ULTRACEMCO"
+    "ACC",
+    "ADANIENT",
+    "ASTRAZEN",
+    "BCPL",
+    "GODFRYPHLP",
+    "HDFCBANK",
+    "MADRASFERT",
+    "MEDPLUS",
+    "SPANDANA",
+    "SSDL",
+    "SWIGGY",
+    "WAAREERTL"
   ]
 }
