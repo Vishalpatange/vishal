@@ -1,13 +1,12 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "BLUESTARCO",
-    "DABUR",
     "HAVELLS",
     "HDFCBANK",
     "HDFCLIFE",
     "HINDUNILVR",
     "ICICIGI",
     "ICICIPRULI",
+    "IRFC",
     "SBILIFE",
     "TATACONSUM",
     "VOLTAS",
@@ -16,23 +15,26 @@
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "CUBEXTUB",
-    "GVKPIL",
-    "KOTIC",
-    "NACLIND",
-    "TAKE",
-    "WEL"
+    "DAVANGERE",
+    "ELITECON",
+    "INDIAGLYCO",
+    "POWERMECH",
+    "RAYMONDLSL",
+    "TAKE"
   ],
-  "Stocks in Downtrend 237": [
-    "VBL"
+  "Stocks in Downtrend 237": [],
+  "Downtrend with Good Volume Futures": [
+    "HDFCLIFE",
+    "INFY",
+    "MAANALU",
+    "PASHUPATI"
   ],
-  "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "ENRIN",
-    "IVALUE",
-    "MIDWESTLTD",
-    "NIBE",
-    "POLYCAB",
-    "TECHNVISN"
+    "CUBEXTUB",
+    "DODLA",
+    "GAUDIUMIVF",
+    "HINDCOPPER",
+    "NACLIND",
+    "POWERMECH"
   ]
 }
