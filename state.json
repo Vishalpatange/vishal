@@ -1,47 +1,33 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "ALKEM",
     "AMBUJACEM",
-    "BRITANNIA",
+    "BANKBARODA",
     "HAVELLS",
-    "HDFCBANK",
-    "HINDUNILVR",
     "ICICIGI",
     "IEX",
     "IRFC",
-    "PIIND",
+    "RELIANCE",
     "RVNL",
     "SBILIFE",
-    "TATACONSUM",
-    "WIPRO"
+    "TATACONSUM"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "ARSHIYA",
-    "BOHRAIND",
-    "DAVANGERE",
     "ELITECON",
-    "FINKURVE",
-    "INDIAGLYCO",
+    "GANGAFORGE",
     "RAJTV",
-    "RAYMONDLSL",
     "TAKE",
-    "TDPOWERSYS",
-    "UEL",
-    "VCL"
+    "UEL"
   ],
   "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [
-    "FINKURVE"
+    "MANUGRAPH"
   ],
   "Perfect Bearish Varad 2": [
-    "ASHOKA",
-    "ICICIAMC",
-    "INDIAGLYCO",
-    "KOTIC",
-    "PASHUPATI",
-    "SANOFICONR",
-    "SEJALLTD"
+    "HDFCLIFE",
+    "HPIL",
+    "PALREDTEC",
+    "STUDDS"
   ]
 }
