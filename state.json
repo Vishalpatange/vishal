@@ -1,42 +1,22 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "AMBUJACEM",
     "BANKBARODA",
-    "BRITANNIA",
-    "IEX",
-    "IREDA",
-    "IRFC",
-    "MFSL",
-    "RVNL",
-    "UPL"
+    "MARUTI",
+    "TATAELXSI",
+    "UPL",
+    "VOLTAS",
+    "WIPRO"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "BURNPUR",
-    "CSBBANK",
-    "LCCINFOTEC",
-    "POCL",
-    "RAJTV"
+    "JKIPL",
+    "LCCINFOTEC"
   ],
   "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "AAVAS",
-    "CAMS",
-    "CNXIT",
-    "ICICIAMC",
-    "ITAXIS",
-    "ITBETA",
-    "LTM",
-    "MANKIND",
-    "MASTEK",
-    "ROSSELLIND",
-    "RSYSTEMS",
-    "SMLT",
-    "TATAELXSI",
-    "TECHM",
-    "TRUALT",
-    "UEL"
+    "JKIPL"
   ]
 }
