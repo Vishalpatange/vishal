@@ -1,34 +1,42 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
+    "BRITANNIA",
     "KPITTECH",
-    "TATAELXSI"
+    "TATAELXSI",
+    "VOLTAS",
+    "WIPRO"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "APOLLO",
-    "LEMERITE",
+    "DUCON",
+    "EUROTEXIND",
     "PRAXIS",
-    "SWARAJ",
-    "TVVISION"
+    "SPCENET",
+    "SRGHFL",
+    "TVVISION",
+    "VCL",
+    "VISACHROME"
   ],
   "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "AGARIND",
-    "BAJAJELEC",
-    "CMPDI",
-    "EBBETF0430",
-    "EPACK",
-    "HAL",
-    "IDBI",
-    "KCP",
-    "LINCOLN",
-    "MANORAMA",
-    "NIFTYGS48YR",
-    "SAIPARENT",
-    "TRAVELFOOD",
-    "VESUVIUS",
-    "WEBELSOLAR"
+    "ADVAIT",
+    "BECTORFOOD",
+    "BHARATBOND-APR31",
+    "BHARATBOND-APR32",
+    "CAMPUS",
+    "CPEDU",
+    "DELHIVERY",
+    "GOPAL",
+    "INFOBEAN",
+    "INTELLECT",
+    "MEGASTAR",
+    "SAMMAANCAP",
+    "SHAILY",
+    "SOLARWORLD",
+    "STUDDS",
+    "STYRENIX",
+    "SYNGENE"
   ]
 }
