@@ -1,30 +1,33 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "BRITANNIA",
-    "VOLTAS"
+    "ICICIPRULI",
+    "KPITTECH",
+    "MARUTI",
+    "MFSL",
+    "TATACONSUM",
+    "TATAELXSI",
+    "UPL"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
     "DUCON",
-    "PALREDTEC",
-    "WHIRLPOOL"
+    "EUROTEXIND",
+    "INDOTHAI"
   ],
-  "Stocks in Downtrend 237": [
-    "ICICIBANK"
-  ],
+  "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "BAJAJELEC",
-    "BALMLAWRIE",
-    "CAPACITE",
-    "DOLATALGO",
-    "HGINFRA",
-    "PARKHOTELS",
-    "PPL",
-    "SRM",
-    "TEJASNET",
-    "TREJHARA",
-    "VIVIANA"
+    "AFCONS",
+    "APTUS",
+    "BCONCEPTS",
+    "CARYSIL",
+    "DOMS",
+    "GOPAL",
+    "KSOLVES",
+    "LINC",
+    "ROUTE",
+    "SILINV",
+    "TARIL"
   ]
 }
