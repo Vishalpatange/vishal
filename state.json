@@ -1,32 +1,26 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "ICICIPRULI",
+    "BRITANNIA",
+    "HINDUNILVR",
     "KPITTECH",
     "MARUTI",
-    "MFSL",
+    "POLICYBZR",
+    "RELIANCE",
     "TATACONSUM",
     "TATAELXSI",
-    "UPL"
+    "TMPV",
+    "UPL",
+    "WIPRO"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "DUCON",
-    "INDOTHAI"
+    "MEP",
+    "MTEDUCARE"
   ],
   "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "AFCONS",
-    "APTUS",
-    "BCONCEPTS",
-    "CARYSIL",
-    "DOMS",
-    "GOPAL",
-    "KSOLVES",
-    "LINC",
-    "ROUTE",
-    "SILINV",
-    "TARIL"
+    "GILLETTE"
   ]
 }
