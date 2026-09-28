@@ -1,13 +1,18 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
+    "AMBUJACEM",
+    "BANKBARODA",
     "BRITANNIA",
+    "CROMPTON",
+    "HAVELLS",
     "HINDUNILVR",
+    "JIOFIN",
     "KPITTECH",
     "MARUTI",
-    "POLICYBZR",
+    "PFC",
+    "RECLTD",
     "RELIANCE",
     "TATACONSUM",
-    "TATAELXSI",
     "TMPV",
     "UPL",
     "WIPRO"
@@ -15,13 +20,14 @@
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "ARSHIYA",
-    "MEP",
-    "MTEDUCARE"
+    "EUROTEXIND"
   ],
   "Stocks in Downtrend 237": [],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "GILLETTE"
+    "BAJAJST",
+    "BLKASHYAP",
+    "UNIECOM",
+    "WELSPLSOL"
   ]
 }
