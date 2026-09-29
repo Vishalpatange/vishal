@@ -3,31 +3,49 @@
     "AMBUJACEM",
     "BANKBARODA",
     "BRITANNIA",
+    "CANBK",
     "CROMPTON",
+    "GODREJCP",
     "HAVELLS",
     "HINDUNILVR",
+    "ICICIPRULI",
+    "IEX",
+    "INFY",
+    "IRFC",
     "JIOFIN",
     "KPITTECH",
     "MARUTI",
     "PFC",
+    "POLICYBZR",
     "RECLTD",
     "RELIANCE",
     "TATACONSUM",
+    "TATAELXSI",
     "TMPV",
     "UPL",
+    "VMM",
+    "WAAREEENER",
     "WIPRO"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "EUROTEXIND"
+    "ELECTCAST",
+    "EUROTEXIND",
+    "HMVL",
+    "VISACHROME"
   ],
   "Stocks in Downtrend 237": [],
-  "Downtrend with Good Volume Futures": [],
+  "Downtrend with Good Volume Futures": [
+    "HEXATRADEX",
+    "NIFTY1",
+    "SAPPHIRE",
+    "TRENT"
+  ],
   "Perfect Bearish Varad 2": [
-    "BAJAJST",
-    "BLKASHYAP",
-    "UNIECOM",
-    "WELSPLSOL"
+    "BENGALASM",
+    "CAMPUS",
+    "FOODSIN",
+    "GROBTEA"
   ]
 }
