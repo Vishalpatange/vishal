@@ -1,52 +1,32 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "AMBUJACEM",
-    "BANKBARODA",
     "BRITANNIA",
-    "CANBK",
+    "COLPAL",
     "CROMPTON",
+    "FORTIS",
     "GODREJCP",
     "HAVELLS",
-    "HINDUNILVR",
     "ICICIPRULI",
-    "IEX",
-    "INFY",
-    "IRFC",
-    "JIOFIN",
-    "KPITTECH",
-    "MARUTI",
-    "PFC",
+    "MFSL",
+    "ONGC",
     "POLICYBZR",
-    "RECLTD",
     "RELIANCE",
-    "TATACONSUM",
     "TATAELXSI",
-    "TMPV",
-    "UPL",
-    "VMM",
-    "WAAREEENER",
-    "WIPRO"
+    "VOLTAS",
+    "WAAREEENER"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "ELECTCAST",
-    "EUROTEXIND",
-    "HMVL",
-    "VISACHROME"
+    "HMVL"
   ],
   "Stocks in Downtrend 237": [],
-  "Downtrend with Good Volume Futures": [
-    "HEXATRADEX",
-    "NIFTY1",
-    "SAPPHIRE",
-    "SJVN",
-    "TRENT"
-  ],
+  "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "BENGALASM",
-    "CAMPUS",
-    "FOODSIN",
-    "GROBTEA"
+    "BOROSCI",
+    "ELECTCAST",
+    "GLENMARK",
+    "LANDMARK",
+    "TATACOMM"
   ]
 }
