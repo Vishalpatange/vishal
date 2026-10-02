@@ -44,6 +44,7 @@
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
+    "HAZOOR",
     "VIVIMEDLAB"
   ],
   "Stocks in Downtrend 237": [
@@ -51,18 +52,17 @@
   ],
   "Downtrend with Good Volume Futures": [
     "AONETOTAL",
-    "CONSUMBEES",
     "DCAL",
     "EPIGRAL",
     "HDFCMID150",
     "HDFCSENSEX",
     "JBMA",
     "MID150BEES",
-    "SBIETFCON",
+    "NIFTY100EW",
+    "NILE",
     "SELECTIPO",
     "TIINDIA",
-    "TNIDETF",
-    "TOP100CASE"
+    "TNIDETF"
   ],
   "Perfect Bearish Varad 2": [
     "BANKBEES",
@@ -87,7 +87,6 @@
     "JUSTDIAL",
     "LAOPALA",
     "MANCREDIT",
-    "MOVALUE",
     "MUTHOOTFIN",
     "NIFTY50VALUE20",
     "NIFTYBETA",
@@ -96,14 +95,14 @@
     "NIFTYPSUBANK",
     "NIFTYTOP10EW",
     "PSUBANK",
+    "PSUBNKIETF",
     "SENSEXBETA",
     "SETFNIFBK",
-    "STCINDIA",
-    "STUDDS",
     "TAINWALCHM",
     "TOLINS",
     "TORNTPOWER",
     "UNIECOM",
+    "URAVIDEF",
     "VRLLOG"
   ]
 }
