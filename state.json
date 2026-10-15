@@ -1,43 +1,56 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "FORTIS",
-    "IOC",
+    "DMART",
     "MFSL",
-    "SBILIFE",
-    "VMM"
+    "MUTHOOTFIN"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "AASTHA",
-    "ADANIPOWER",
-    "AVROIND",
-    "CLEDUCATE",
-    "GVPTECH",
+    "AFFORDABLE",
+    "EIEL",
+    "HEROMOTOCO",
     "OSIAHYPER",
-    "PNBGILTS",
-    "SONATSOFTW",
-    "UMAEXPORTS",
-    "VSTL"
+    "QUICKHEAL",
+    "VERANDA",
+    "YESBANK"
   ],
   "Stocks in Downtrend 237": [
-    "M&M",
-    "MARICO",
+    "ADANIPOWER",
+    "INOXWIND",
     "MAXHEALTH",
     "SJVN"
   ],
-  "Downtrend with Good Volume Futures": [
-    "BALAJEE"
-  ],
+  "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "ALBERTDAVD",
-    "DATAMATICS",
-    "GILLANDERS",
-    "GROWWPSE",
-    "MAITHANALL",
-    "PNBGILTS",
-    "SUDARCOLOR",
-    "SUKHJITS",
-    "TOKYOPLAST"
+    "ADANIPOWER",
+    "ANNAPURNA",
+    "ARVINDFASN",
+    "AWHCL",
+    "BLSE",
+    "BNAGROCHEM",
+    "DBREALTY",
+    "ENDURANCE",
+    "GLOTTIS",
+    "HUBTOWN",
+    "INOXWIND",
+    "JARO",
+    "KALPATARU",
+    "MASFIN",
+    "NITTAGELA",
+    "NOCIL",
+    "OMINFRAL",
+    "PAISALO",
+    "PYRAMID",
+    "QUICKHEAL",
+    "RBA",
+    "RSWM",
+    "SAFARI",
+    "SANOFICONR",
+    "SJVN",
+    "SUBROS",
+    "SWANCORP",
+    "TCIEXP",
+    "VIKRAMSOLR"
   ]
 }
