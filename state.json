@@ -1,42 +1,30 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
     "ALKEM",
+    "BRITANNIA",
     "DMART",
     "FORTIS",
-    "ICICIPRULI",
+    "MAXHEALTH",
     "MFSL",
-    "SWIGGY",
     "VMM"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
-  "Varad Bullish": [
-    "AURIONPRO",
-    "DIVGIITTS",
-    "EIEL",
-    "HEROMOTOCO",
-    "LLOYDSENGG",
-    "MBLINFRA",
-    "SONATSOFTW"
-  ],
+  "Varad Bullish": [],
   "Stocks in Downtrend 237": [
-    "INOXWIND",
-    "KEC",
+    "FORTIS",
     "MAXHEALTH"
   ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "AMANTA",
-    "APOLLOHOSP",
-    "AUTOAXLES",
-    "CERA",
-    "EIEL",
-    "GMRAIRPORT",
-    "JSLL",
-    "LUPIN",
-    "MAFATIND",
-    "STARCEMENT",
-    "SURYAROSNI",
-    "SYMPHONY"
+    "BLAL",
+    "DIVGIITTS",
+    "GEMAROMA",
+    "GROWWPSE",
+    "GULFOILLUB",
+    "LLOYDSENGG",
+    "NOCIL",
+    "SUDARCOLOR",
+    "VENUSREM"
   ]
 }
