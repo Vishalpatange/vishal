@@ -4,13 +4,17 @@
     "BRITANNIA",
     "DMART",
     "FORTIS",
+    "ICICIPRULI",
     "MAXHEALTH",
     "MFSL",
+    "NBCC",
     "VMM"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
-  "Varad Bullish": [],
+  "Varad Bullish": [
+    "HAZOOR"
+  ],
   "Stocks in Downtrend 237": [
     "FORTIS",
     "MAXHEALTH"
@@ -24,6 +28,7 @@
     "GULFOILLUB",
     "LLOYDSENGG",
     "NOCIL",
+    "RSDFIN",
     "SUDARCOLOR",
     "VENUSREM"
   ]
