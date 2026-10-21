@@ -1,35 +1,45 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
-    "ALKEM",
+    "BIOCON",
     "BRITANNIA",
+    "COCHINSHIP",
+    "COLPAL",
     "DMART",
     "FORTIS",
+    "GODFRYPHLP",
     "ICICIPRULI",
+    "IEX",
+    "IREDA",
+    "JUBLFOOD",
     "MAXHEALTH",
     "MFSL",
+    "MUTHOOTFIN",
     "NBCC",
-    "VMM"
+    "NMDC",
+    "NTPC",
+    "PIIND",
+    "SBILIFE",
+    "SWIGGY",
+    "TIINDIA",
+    "VMM",
+    "VOLTAS"
   ],
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "HAZOOR"
+    "BHAGYANGR",
+    "RKDL"
   ],
   "Stocks in Downtrend 237": [
-    "FORTIS",
     "MAXHEALTH"
   ],
   "Downtrend with Good Volume Futures": [],
   "Perfect Bearish Varad 2": [
-    "BLAL",
-    "DIVGIITTS",
-    "GEMAROMA",
-    "GROWWPSE",
-    "GULFOILLUB",
-    "LLOYDSENGG",
-    "NOCIL",
-    "RSDFIN",
-    "SUDARCOLOR",
-    "VENUSREM"
+    "APLLTD",
+    "JAYBARMARU",
+    "NATCOPHARM",
+    "PIONRINV",
+    "SUKHJITS",
+    "ZYDUSWELL"
   ]
 }
