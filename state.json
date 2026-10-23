@@ -1,35 +1,43 @@
 {
   "No Loss Only Profit Swing Trading (Fut)": [
     "BDL",
+    "BEL",
     "BIOCON",
     "BRITANNIA",
+    "CANBK",
     "COCHINSHIP",
     "COLPAL",
+    "CONCOR",
     "CROMPTON",
     "DABUR",
+    "DELHIVERY",
     "DMART",
     "FORTIS",
     "GODFRYPHLP",
+    "HAVELLS",
     "HINDUNILVR",
-    "ICICIPRULI",
     "IEX",
     "INOXWIND",
     "IREDA",
+    "IRFC",
+    "JIOFIN",
     "JUBLFOOD",
+    "KEI",
+    "LTF",
     "LUPIN",
-    "MARUTI",
-    "MAXHEALTH",
     "MAZDOCK",
     "MFSL",
     "MUTHOOTFIN",
     "NBCC",
+    "NESTLEIND",
+    "NHPC",
     "NMDC",
     "NTPC",
+    "PFC",
     "PIIND",
     "POWERGRID",
     "RVNL",
-    "SBICARD",
-    "SRF",
+    "SBILIFE",
     "SWIGGY",
     "TIINDIA",
     "TMPV",
@@ -39,15 +47,16 @@
   "Bull Doji Confirm": [],
   "Bearish Super New Futures": [],
   "Varad Bullish": [
-    "BHAGYANGR",
-    "DPSCLTD",
-    "EUROTEXIND"
+    "SITINET",
+    "SUKHJITS"
   ],
   "Stocks in Downtrend 237": [
-    "FORTIS",
-    "HDBFS",
     "MAXHEALTH"
   ],
   "Downtrend with Good Volume Futures": [],
-  "Perfect Bearish Varad 2": []
+  "Perfect Bearish Varad 2": [
+    "MANKIND",
+    "SUNDROP",
+    "TCI"
+  ]
 }
